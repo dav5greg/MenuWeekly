@@ -4,6 +4,10 @@ const CORS_HEADERS = {
   "Access-Control-Allow-Methods": "GET, PUT, OPTIONS"
 };
 
+const GITHUB_REPOSITORY = "dav5greg/MenuWeekly";
+const GITHUB_FILE_PATH = "data/menu.json";
+const GITHUB_BRANCH = "main";
+
 function githubHeaders() {
   return {
     "Accept": "application/vnd.github+json",
@@ -14,13 +18,11 @@ function githubHeaders() {
 }
 
 function githubFileUrl() {
-  const repo = process.env.GITHUB_REPOSITORY;
-  const path = process.env.GITHUB_FILE_PATH || "data/menu.json";
-  return `https://api.github.com/repos/${repo}/contents/${path}`;
+  return `https://api.github.com/repos/${GITHUB_REPOSITORY}/contents/${GITHUB_FILE_PATH}`;
 }
 
 async function getGitHubFile() {
-  const response = await fetch(githubFileUrl(), { headers: githubHeaders(), cache: "no-store" });
+  const response = await fetch(`${githubFileUrl()}?ref=${encodeURIComponent(GITHUB_BRANCH)}`, { headers: githubHeaders(), cache: "no-store" });
   if (!response.ok) throw new Error(`GitHub GET failed (${response.status}): ${await response.text()}`);
   const file = await response.json();
   const data = JSON.parse(Buffer.from(file.content.replace(/\\n/g, ""), "base64").toString("utf8"));
@@ -42,7 +44,7 @@ async function putGitHubFile(data, expectedSha) {
       message: "Update MenuWeekly database",
       content,
       sha: expectedSha,
-      branch: process.env.GITHUB_BRANCH || "main"
+      branch: GITHUB_BRANCH
     })
   });
   if (response.status === 409) return { conflict: true };
@@ -54,7 +56,7 @@ export default async function handler(request, response) {
   Object.entries(CORS_HEADERS).forEach(([key, value]) => response.setHeader(key, value));
   if (request.method === "OPTIONS") return response.status(204).end();
 
-  if (!process.env.GITHUB_TOKEN || !process.env.GITHUB_REPOSITORY) {
+  if (!process.env.GITHUB_TOKEN) {
     return response.status(503).json({ error: "SERVER_NOT_CONFIGURED", message: "MenuWeekly API non configurata." });
   }
 
