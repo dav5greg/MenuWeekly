@@ -36,8 +36,8 @@
       },
       "wednesday": {
         "lunch": {
-          "type": "dish",
-          "dishId": "iwm3agampnimuwzhc4i"
+          "type": "free",
+          "text": "Libero"
         },
         "dinner": null
       },
