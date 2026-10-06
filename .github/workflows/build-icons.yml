@@ -3,7 +3,7 @@ name: Build app icons
 on:
   push:
     paths:
-      - 'icon-source.svg'
+      - 'icon-design.svg'
       - '.github/workflows/build-icons.yml'
 
 permissions:
@@ -16,28 +16,22 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generate PNG icons
         run: |
-          python3 -m pip install --user pillow
-          python3 - <<'PY'
-          import re, base64
-          from pathlib import Path
-          from PIL import Image
-          s = Path('icon-source.svg').read_text()
-          m = re.search(r'data:image/(?:png|jpeg);base64,([^"\']+)', s)
-          if not m:
-              raise SystemExit('Icon source image not found')
-          payload = m.group(1)
-          payload += '=' * (-len(payload) % 4)
-          source = Path('/tmp/source.bin')
-          source.write_bytes(base64.b64decode(payload))
-          img = Image.open(source).convert('RGBA')
-          for size in (180, 192, 512):
-              img.resize((size, size), Image.Resampling.LANCZOS).save(f'icon-{size}.png', format='PNG', optimize=True)
-          PY
+          npm install --no-save sharp
+          node <<'NODE'
+          const sharp = require('sharp');
+          const fs = require('fs');
+          const input = fs.readFileSync('icon-design.svg');
+          (async () => {
+            for (const size of [180, 192, 512]) {
+              await sharp(input).resize(size, size, { fit: 'fill' }).png().toFile(`icon-${size}.png`);
+            }
+          })().catch(err => { console.error(err); process.exit(1); });
+          NODE
       - name: Commit generated icons
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add icon-180.png icon-192.png icon-512.png
           if git diff --cached --quiet; then exit 0; fi
-          git commit -m 'Pubblica la stessa icona su iPhone e Android'
+          git commit -m 'Pubblica nuova icona MenuWeekly'
           git push
