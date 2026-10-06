@@ -1,0 +1,38 @@
+name: Build app icons
+
+on:
+  push:
+    paths:
+      - 'icon-source.svg'
+      - '.github/workflows/build-icons.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  icons:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate PNG icons
+        run: |
+          python3 - <<'PY'
+          import re, base64
+          from pathlib import Path
+          s = Path('icon-source.svg').read_text()
+          m = re.search(r'data:image/(?:png|jpeg);base64,([^"\']+)', s)
+          if not m:
+              raise SystemExit('Icon source image not found')
+          Path('/tmp/source.bin').write_bytes(base64.b64decode(m.group(1)))
+          PY
+          magick /tmp/source.bin -resize 180x180! icon-180.png
+          magick /tmp/source.bin -resize 192x192! icon-192.png
+          magick /tmp/source.bin -resize 512x512! icon-512.png
+      - name: Commit generated icons
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add icon-180.png icon-192.png icon-512.png
+          if git diff --cached --quiet; then exit 0; fi
+          git commit -m 'Pubblica la stessa icona su iPhone e Android'
+          git push
