@@ -30,7 +30,10 @@
         }
       },
       "thursday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Pesce"
+        },
         "dinner": null
       },
       "friday": {
