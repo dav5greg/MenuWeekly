@@ -51,7 +51,10 @@
       },
       "sunday": {
         "lunch": null,
-        "dinner": null
+        "dinner": {
+          "type": "free",
+          "text": "Vediamo cosa succede se inserisco un testo lungo"
+        }
       }
     },
     "2026-09-28": {
