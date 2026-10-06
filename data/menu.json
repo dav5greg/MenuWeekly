@@ -1,11 +1,6 @@
 {
   "dishes": [
     {
-      "id": "w53vfy313momuwynw73",
-      "title": "Prova",
-      "active": true
-    },
-    {
       "id": "ci6oth0yhhlmuwyocjy",
       "title": "Test",
       "active": true
