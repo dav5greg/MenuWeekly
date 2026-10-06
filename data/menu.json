@@ -52,8 +52,8 @@
       "sunday": {
         "lunch": null,
         "dinner": {
-          "type": "free",
-          "text": "Vediamo cosa succede se inserisco un testo lungo"
+          "type": "dish",
+          "dishId": "w53vfy313momuwynw73"
         }
       }
     },
