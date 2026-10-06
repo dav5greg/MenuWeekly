@@ -20,7 +20,10 @@
         "dinner": null
       },
       "wednesday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Testo libero"
+        },
         "dinner": null
       },
       "thursday": {
