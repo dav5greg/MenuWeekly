@@ -52,8 +52,8 @@
       "sunday": {
         "lunch": null,
         "dinner": {
-          "type": "dish",
-          "dishId": "w53vfy313momuwynw73"
+          "type": "free",
+          "text": "Fff"
         }
       }
     },
