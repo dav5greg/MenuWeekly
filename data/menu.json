@@ -1,5 +1,10 @@
 {
-  "dishes": [],
+  "dishes": [
+    {
+      "id": "cpqbcnxbr0qmux5p5bo",
+      "title": "Pizza"
+    }
+  ],
   "weeks": {
     "2026-10-05": {
       "monday": {
