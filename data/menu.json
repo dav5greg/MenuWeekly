@@ -1,7 +1,158 @@
 {
   "dishes": [],
-  "weeks": {},
+  "weeks": {
+    "2026-10-05": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-09-28": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-09-21": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-10-12": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-10-19": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    }
+  },
   "settings": {
-    "showWeekend": false
+    "showWeekend": true
   }
 }
