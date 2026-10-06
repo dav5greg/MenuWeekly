@@ -1,5 +1,11 @@
 {
-  "dishes": [],
+  "dishes": [
+    {
+      "id": "w53vfy313momuwynw73",
+      "title": "Prova",
+      "active": true
+    }
+  ],
   "weeks": {
     "2026-10-05": {
       "monday": {
