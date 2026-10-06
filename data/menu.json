@@ -173,6 +173,6 @@
     }
   },
   "settings": {
-    "showWeekend": false
+    "showWeekend": true
   }
 }
