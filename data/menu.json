@@ -51,10 +51,7 @@
       },
       "sunday": {
         "lunch": null,
-        "dinner": {
-          "type": "free",
-          "text": "Fff2"
-        }
+        "dinner": null
       }
     },
     "2026-09-28": {
