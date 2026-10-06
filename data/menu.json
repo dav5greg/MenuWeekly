@@ -18,10 +18,7 @@
   "weeks": {
     "2026-10-05": {
       "monday": {
-        "lunch": {
-          "type": "dish",
-          "dishId": "iwm3agampnimuwzhc4i"
-        },
+        "lunch": null,
         "dinner": null
       },
       "tuesday": {
