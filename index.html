@@ -28,7 +28,7 @@ nav{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:min(720px,
 <main>
 <section id="page-menu" class="page active"><div class="weekbar"><button class="navbtn" onclick="changeWeek(-1)">‹</button><div style="text-align:center"><div id="week-title" class="week-title"></div><span id="week-sub" class="week-sub"></span></div><button class="navbtn" onclick="changeWeek(1)">›</button></div><div id="menu-grid" class="menu-card"><div class="loading">Caricamento…</div></div></section>
 <section id="page-dishes" class="page"><div class="section-title">I miei piatti</div><div class="subtle">Il tuo elenco di piatti disponibili nel menu.</div><div class="search"><span class="lens">⌕</span><input id="dish-search" oninput="renderDishes()" placeholder="Cerca un piatto…"><button class="clear" onclick="clearSearch()">×</button></div><button class="quick" style="margin:0 0 12px;width:100%;background:var(--green);color:#fff;border-radius:15px;padding:13px 15px;font-size:12px;font-weight:850;box-shadow:0 8px 18px rgba(71,116,90,.18)" onclick="openDishModal()">＋ Aggiungi piatto</button><div id="dish-list" class="dish-list"></div></section>
-<section id="page-settings" class="page"><div class="section-title">Impostazioni</div><div class="subtle">Preferenze di visualizzazione dell'app.</div><div class="settings-list"><div class="setting"><div><div class="setting-title">Mostra weekend</div><div class="setting-desc">Aggiunge sabato e domenica al menu settimanale.</div></div><button id="weekend-switch" class="switch" onclick="toggleWeekend()"><i></i></button></div></div></section>
+<section id="page-settings" class="page"><div class="section-title">Impostazioni</div><div class="settings-list"><div class="setting"><div><div class="setting-title">Mostra weekend</div><div class="setting-desc">Aggiunge sabato e domenica al menu settimanale.</div></div><button id="weekend-switch" class="switch" onclick="toggleWeekend()"><i></i></button></div></div></section>
 </main>
 <nav><button id="tab-menu" class="tab active" onclick="showPage('menu')"><span class="ico">☷</span>MENU</button><button id="tab-dishes" class="tab" onclick="showPage('dishes')"><span class="ico">🍽</span>I MIEI PIATTI</button><button id="tab-settings" class="tab" onclick="showPage('settings')"><span class="ico">⚙</span>IMPOSTAZIONI</button></nav>
 </div>
@@ -69,10 +69,10 @@ function usageCount(id){let n=0;Object.values(db.weeks||{}).forEach(w=>Object.va
 function closeModal(){document.getElementById('modal-overlay').classList.remove('show');document.getElementById('modal-input').style.display='block';document.querySelector('.dialog-actions .primary').textContent='Salva';selectedCell=null}
 function closeSheet(){document.getElementById('sheet-overlay').classList.remove('show');selectedCell=null}
 function updateSwitch(){const on=!!db.settings.showWeekend;document.getElementById('weekend-switch').classList.toggle('on',on)}
-function toggleWeekend(){db.settings.showWeekend=!db.settings.showWeekend;save()}
+async function toggleWeekend(){db.settings.showWeekend=!db.settings.showWeekend;updateSwitch();renderMenu();await save()}
 function clearSearch(){const e=document.getElementById('dish-search');e.value='';renderDishes()}
 function showStatus(text){const e=document.getElementById('status');e.textContent=text;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),2200)}
-function esc(s){return String(s).replace(/[&<>\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\\':'&#92;','"':'&quot;'}[c]))}
+function esc(s){return String(s).replace(/[&<>\\"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','\\':'&#92;','"':'&quot;'}[c]))}
 document.getElementById('modal-input').addEventListener('keydown',e=>{if(e.key==='Enter')saveModal();if(e.key==='Escape')closeModal()});
 load();
 </script>
