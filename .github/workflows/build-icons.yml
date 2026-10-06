@@ -25,8 +25,10 @@ jobs:
           m = re.search(r'data:image/(?:png|jpeg);base64,([^"\']+)', s)
           if not m:
               raise SystemExit('Icon source image not found')
+          payload = m.group(1)
+          payload += '=' * (-len(payload) % 4)
           source = Path('/tmp/source.bin')
-          source.write_bytes(base64.b64decode(m.group(1)))
+          source.write_bytes(base64.b64decode(payload))
           img = Image.open(source).convert('RGBA')
           for size in (180, 192, 512):
               img.resize((size, size), Image.Resampling.LANCZOS).save(f'icon-{size}.png', format='PNG', optimize=True)
