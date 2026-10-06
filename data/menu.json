@@ -1,11 +1,5 @@
 {
-  "dishes": [
-    {
-      "id": "ci6oth0yhhlmuwyocjy",
-      "title": "Test",
-      "active": true
-    }
-  ],
+  "dishes": [],
   "weeks": {
     "2026-10-05": {
       "monday": {
@@ -13,10 +7,7 @@
         "dinner": null
       },
       "tuesday": {
-        "lunch": {
-          "type": "dish",
-          "dishId": "ci6oth0yhhlmuwyocjy"
-        },
+        "lunch": null,
         "dinner": null
       },
       "wednesday": {
