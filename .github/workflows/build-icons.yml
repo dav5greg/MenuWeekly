@@ -16,18 +16,21 @@ jobs:
       - uses: actions/checkout@v4
       - name: Generate PNG icons
         run: |
+          python3 -m pip install --user pillow
           python3 - <<'PY'
           import re, base64
           from pathlib import Path
+          from PIL import Image
           s = Path('icon-source.svg').read_text()
           m = re.search(r'data:image/(?:png|jpeg);base64,([^"\']+)', s)
           if not m:
               raise SystemExit('Icon source image not found')
-          Path('/tmp/source.bin').write_bytes(base64.b64decode(m.group(1)))
+          source = Path('/tmp/source.bin')
+          source.write_bytes(base64.b64decode(m.group(1)))
+          img = Image.open(source).convert('RGBA')
+          for size in (180, 192, 512):
+              img.resize((size, size), Image.Resampling.LANCZOS).save(f'icon-{size}.png', format='PNG', optimize=True)
           PY
-          magick /tmp/source.bin -resize 180x180! icon-180.png
-          magick /tmp/source.bin -resize 192x192! icon-192.png
-          magick /tmp/source.bin -resize 512x512! icon-512.png
       - name: Commit generated icons
         run: |
           git config user.name 'github-actions[bot]'
