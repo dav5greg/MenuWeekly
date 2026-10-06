@@ -17,10 +17,7 @@
         "dinner": null
       },
       "wednesday": {
-        "lunch": {
-          "type": "dish",
-          "dishId": "ci6oth0yhhlmuwyocjy"
-        },
+        "lunch": null,
         "dinner": null
       },
       "thursday": {
