@@ -24,7 +24,10 @@
           "type": "free",
           "text": "Farro e fagioli"
         },
-        "dinner": null
+        "dinner": {
+          "type": "free",
+          "text": "Pizza"
+        }
       },
       "thursday": {
         "lunch": null,
