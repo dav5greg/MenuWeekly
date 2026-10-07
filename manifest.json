@@ -1,7 +1,7 @@
 {
   "id":"MenuWeekly",
-  "name":"MenuWeekly",
-  "short_name":"MenuWeekly",
+  "name":"Menu Weekly",
+  "short_name":"Menu Weekly",
   "start_url":"./",
   "scope":"./",
   "display":"standalone",
