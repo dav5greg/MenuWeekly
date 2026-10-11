@@ -16,7 +16,10 @@
   "weeks": {
     "2026-10-05": {
       "monday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Frittata con zucchine"
+        },
         "dinner": null
       },
       "tuesday": {
