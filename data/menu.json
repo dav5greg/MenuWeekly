@@ -34,10 +34,7 @@
           "type": "free",
           "text": "Farro e fagioli"
         },
-        "dinner": {
-          "type": "dish",
-          "dishId": "cpqbcnxbr0qmux5p5bo"
-        }
+        "dinner": null
       },
       "thursday": {
         "lunch": null,
