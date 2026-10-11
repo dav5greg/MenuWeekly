@@ -38,10 +38,7 @@
       },
       "thursday": {
         "lunch": null,
-        "dinner": {
-          "type": "dish",
-          "dishId": "2twnatbumkomux5pufa"
-        }
+        "dinner": null
       },
       "friday": {
         "lunch": null,
