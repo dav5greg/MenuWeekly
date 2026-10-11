@@ -147,7 +147,10 @@
           "type": "free",
           "text": "Burger zucca"
         },
-        "dinner": null
+        "dinner": {
+          "type": "dish",
+          "dishId": "ezt94fpv0q5mv3rpnwl"
+        }
       },
       "tuesday": {
         "lunch": {
