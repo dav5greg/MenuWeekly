@@ -201,7 +201,10 @@
       },
       "friday": {
         "lunch": null,
-        "dinner": null
+        "dinner": {
+          "type": "free",
+          "text": "Cena da nonna Anna"
+        }
       },
       "saturday": {
         "lunch": null,
