@@ -143,7 +143,10 @@
     },
     "2026-10-12": {
       "monday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Burger zucca"
+        },
         "dinner": null
       },
       "tuesday": {
