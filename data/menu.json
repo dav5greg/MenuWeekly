@@ -163,7 +163,10 @@
         }
       },
       "thursday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Verdura"
+        },
         "dinner": {
           "type": "dish",
           "dishId": "cpqbcnxbr0qmux5p5bo"
