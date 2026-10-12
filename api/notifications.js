@@ -1,0 +1,13 @@
+import webpush from "web-push";
+
+const REPOSITORY = "dav5greg/MenuWeekly";
+const FILE_PATH = "data/subscriptions.json";
+const BRANCH = "main";
+const PUBLIC_VAPID_KEY = process.env.VAPID_PUBLIC_KEY;
+const CORS = {"Access-Control-Allow-Origin":"*","Access-Control-Allow-Headers":"Content-Type","Access-Control-Allow-Methods":"GET,POST,DELETE,OPTIONS"};
+function gh(){return {"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.GITHUB_TOKEN}`,"X-GitHub-Api-Version":"2022-11-28","User-Agent":"MenuWeekly-Notifications"};}
+function fileUrl(){return `https://api.github.com/repos/${REPOSITORY}/contents/${FILE_PATH}`;}
+async function read(){const r=await fetch(`${fileUrl()}?ref=${BRANCH}`,{headers:gh(),cache:"no-store"});if(!r.ok)throw new Error(`GitHub GET ${r.status}`);const j=await r.json();return {data:JSON.parse(Buffer.from(j.content,"base64").toString("utf8")),sha:j.sha};}
+async function write(data,sha,message){const body={message,content:Buffer.from(JSON.stringify(data,null,2)+"\n").toString("base64"),branch:BRANCH,sha};const r=await fetch(fileUrl(),{method:"PUT",headers:{...gh(),"Content-Type":"application/json"},body:JSON.stringify(body)});if(!r.ok)throw new Error(`GitHub PUT ${r.status}`);}
+function valid(s){return s&&typeof s.endpoint==="string"&&s.keys&&typeof s.keys.p256dh==="string"&&typeof s.keys.auth==="string";}
+export default async function handler(req,res){Object.entries(CORS).forEach(([k,v])=>res.setHeader(k,v));if(req.method==="OPTIONS")return res.status(204).end();if(!process.env.GITHUB_TOKEN||!PUBLIC_VAPID_KEY)return res.status(503).json({error:"NOT_CONFIGURED"});try{const current=await read();if(req.method==="GET")return res.status(200).json({publicKey:PUBLIC_VAPID_KEY});let body=req.body;if(typeof body==="string")body=JSON.parse(body);if(req.method==="POST"){if(!valid(body))return res.status(400).json({error:"INVALID_SUBSCRIPTION"});const list=(current.data.subscriptions||[]).filter(x=>x.endpoint!==body.endpoint);list.push({endpoint:body.endpoint,keys:body.keys});await write({subscriptions:list},current.sha,"Update notification subscriptions");return res.status(200).json({ok:true});}if(req.method==="DELETE"){const endpoint=body?.endpoint;if(typeof endpoint!=="string")return res.status(400).json({error:"MISSING_ENDPOINT"});const list=(current.data.subscriptions||[]).filter(x=>x.endpoint!==endpoint);await write({subscriptions:list},current.sha,"Remove notification subscription");return res.status(200).json({ok:true});}return res.status(405).json({error:"METHOD_NOT_ALLOWED"});}catch(e){console.error(e);return res.status(500).json({error:"NOTIFICATION_STORAGE_ERROR"});}}
