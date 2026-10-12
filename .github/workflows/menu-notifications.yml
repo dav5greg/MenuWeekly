@@ -1,0 +1,53 @@
+name: MenuWeekly notifications
+
+on:
+  workflow_dispatch:
+    inputs:
+      type:
+        description: "Tipo di notifica da testare"
+        required: true
+        default: freezer
+        type: choice
+        options:
+          - freezer
+          - weekly
+  schedule:
+    - cron: "45 7 * * *"
+      timezone: "Europe/Rome"
+    - cron: "0 20 * * 0"
+      timezone: "Europe/Rome"
+
+jobs:
+  send:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Determine notification type
+        id: type
+        env:
+          EVENT_SCHEDULE: ${{ github.event.schedule }}
+          MANUAL_TYPE: ${{ inputs.type }}
+        run: |
+          if [ -n "$MANUAL_TYPE" ]; then
+            echo "type=$MANUAL_TYPE" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "45 7 * * *" ]; then
+            echo "type=freezer" >> "$GITHUB_OUTPUT"
+          elif [ "$EVENT_SCHEDULE" = "0 20 * * 0" ]; then
+            echo "type=weekly" >> "$GITHUB_OUTPUT"
+          else
+            echo "Unsupported schedule: $EVENT_SCHEDULE"
+            exit 1
+          fi
+
+      - name: Send notification
+        env:
+          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          TYPE: ${{ steps.type.outputs.type }}
+        run: |
+          if [ -z "$CRON_SECRET" ]; then
+            echo "GitHub Actions secret CRON_SECRET is not configured."
+            exit 1
+          fi
+
+          curl --fail --silent --show-error \
+            -H "Authorization: Bearer $CRON_SECRET" \
+            "https://menu-weekly-gregdavide-4207.vercel.app/api/cron/notifications?type=$TYPE"
