@@ -1,22 +1,251 @@
 {
   "dishes": [
-    {"id":"cpqbcnxbr0qmux5p5bo","title":"Pizza","needsFreezer":false},
-    {"id":"2twnatbumkomux5pufa","title":"Pesce","needsFreezer":false},
-    {"id":"3jd5qh3hscwmux5qevm","title":"Onto","needsFreezer":false},
-    {"id":"iwllt0rzbdfmv3rp32l","title":"Frittata con zucchine","needsFreezer":false},
-    {"id":"4yuyjrwxhc8mv3rp6yw","title":"Farro e fagioli","needsFreezer":false},
-    {"id":"bkv75wdtt2cmv3rpc77","title":"Pasta","needsFreezer":false},
-    {"id":"nbte56njkjgmv3rphhy","title":"Minestra di fagioli","needsFreezer":false},
-    {"id":"ezt94fpv0q5mv3rpnwl","title":"Pollo","needsFreezer":true},
-    {"id":"0haf2pajn2rmv3rr7vd","title":"Hamburger","needsFreezer":true},
-    {"id":"bzvdiu6mfzmv3rszq7","title":"Tramezzini","needsFreezer":false}
+    {
+      "id": "cpqbcnxbr0qmux5p5bo",
+      "title": "Pizza",
+      "needsFreezer": false
+    },
+    {
+      "id": "2twnatbumkomux5pufa",
+      "title": "Pesce",
+      "needsFreezer": false
+    },
+    {
+      "id": "3jd5qh3hscwmux5qevm",
+      "title": "Onto",
+      "needsFreezer": false
+    },
+    {
+      "id": "iwllt0rzbdfmv3rp32l",
+      "title": "Frittata con zucchine",
+      "needsFreezer": false
+    },
+    {
+      "id": "4yuyjrwxhc8mv3rp6yw",
+      "title": "Farro e fagioli",
+      "needsFreezer": false
+    },
+    {
+      "id": "bkv75wdtt2cmv3rpc77",
+      "title": "Pasta",
+      "needsFreezer": false
+    },
+    {
+      "id": "nbte56njkjgmv3rphhy",
+      "title": "Minestra di fagioli",
+      "needsFreezer": false
+    },
+    {
+      "id": "ezt94fpv0q5mv3rpnwl",
+      "title": "Pollo",
+      "needsFreezer": true
+    },
+    {
+      "id": "0haf2pajn2rmv3rr7vd",
+      "title": "Hamburger",
+      "needsFreezer": true
+    },
+    {
+      "id": "bzvdiu6mfzmv3rszq7",
+      "title": "Tramezzini",
+      "needsFreezer": true
+    }
   ],
   "weeks": {
-    "2026-10-05": {"monday":{"lunch":{"type":"free","text":"Frittata con zucchine"},"dinner":null},"tuesday":{"lunch":{"type":"free","text":"Pasta"},"dinner":null},"wednesday":{"lunch":{"type":"free","text":"Farro e fagioli"},"dinner":null},"thursday":{"lunch":null,"dinner":null},"friday":{"lunch":null,"dinner":null},"saturday":{"lunch":null,"dinner":null},"sunday":{"lunch":null,"dinner":null}},
-    "2026-09-28": {"monday":{"lunch":null,"dinner":null},"tuesday":{"lunch":null,"dinner":null},"wednesday":{"lunch":null,"dinner":null},"thursday":{"lunch":null,"dinner":null},"friday":{"lunch":null,"dinner":null},"saturday":{"lunch":null,"dinner":null},"sunday":{"lunch":null,"dinner":null}},
-    "2026-09-21": {"monday":{"lunch":null,"dinner":null},"tuesday":{"lunch":null,"dinner":null},"wednesday":{"lunch":null,"dinner":null},"thursday":{"lunch":null,"dinner":null},"friday":{"lunch":null,"dinner":null},"saturday":{"lunch":null,"dinner":null},"sunday":{"lunch":null,"dinner":null}},
-    "2026-10-12": {"monday":{"lunch":{"type":"free","text":"Burger zucca"},"dinner":{"type":"dish","dishId":"ezt94fpv0q5mv3rpnwl"}},"tuesday":{"lunch":{"type":"dish","dishId":"bkv75wdtt2cmv3rpc77"},"dinner":{"type":"dish","dishId":"bzvdiu6mfzmv3rszq7"}},"wednesday":{"lunch":{"type":"dish","dishId":"4yuyjrwxhc8mv3rp6yw"},"dinner":{"type":"dish","dishId":"0haf2pajn2rmv3rr7vd"}},"thursday":{"lunch":{"type":"free","text":"Verdura"},"dinner":{"type":"dish","dishId":"cpqbcnxbr0qmux5p5bo"}},"friday":{"lunch":{"type":"dish","dishId":"iwllt0rzbdfmv3rp32l"},"dinner":{"type":"dish","dishId":"3jd5qh3hscwmv3rszq7"}},"saturday":{"lunch":null,"dinner":null},"sunday":{"lunch":null,"dinner":null}},
-    "2026-10-19": {"monday":{"lunch":null,"dinner":null},"tuesday":{"lunch":null,"dinner":null},"wednesday":{"lunch":null,"dinner":null},"thursday":{"lunch":null,"dinner":null},"friday":{"lunch":null,"dinner":{"type":"free","text":"Cena da nonna Anna"}},"saturday":{"lunch":null,"dinner":null},"sunday":{"lunch":null,"dinner":null}}
+    "2026-10-05": {
+      "monday": {
+        "lunch": {
+          "type": "free",
+          "text": "Frittata con zucchine"
+        },
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": {
+          "type": "free",
+          "text": "Pasta"
+        },
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": {
+          "type": "free",
+          "text": "Farro e fagioli"
+        },
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-09-28": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-09-21": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-10-12": {
+      "monday": {
+        "lunch": {
+          "type": "free",
+          "text": "Burger zucca"
+        },
+        "dinner": {
+          "type": "dish",
+          "dishId": "ezt94fpv0q5mv3rpnwl"
+        }
+      },
+      "tuesday": {
+        "lunch": {
+          "type": "dish",
+          "dishId": "bkv75wdtt2cmv3rpc77"
+        },
+        "dinner": {
+          "type": "dish",
+          "dishId": "bzvdiu6mfzmv3rszq7"
+        }
+      },
+      "wednesday": {
+        "lunch": {
+          "type": "dish",
+          "dishId": "4yuyjrwxhc8mv3rp6yw"
+        },
+        "dinner": {
+          "type": "dish",
+          "dishId": "0haf2pajn2rmv3rr7vd"
+        }
+      },
+      "thursday": {
+        "lunch": {
+          "type": "free",
+          "text": "Verdura"
+        },
+        "dinner": {
+          "type": "dish",
+          "dishId": "cpqbcnxbr0qmux5p5bo"
+        }
+      },
+      "friday": {
+        "lunch": {
+          "type": "dish",
+          "dishId": "iwllt0rzbdfmv3rp32l"
+        },
+        "dinner": {
+          "type": "dish",
+          "dishId": "3jd5qh3hscwmv3rszq7"
+        }
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-10-19": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": {
+          "type": "free",
+          "text": "Cena da nonna Anna"
+        }
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    }
   },
-  "settings":{"showWeekend":false}
+  "settings": {
+    "showWeekend": false
+  }
 }
