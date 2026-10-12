@@ -1,0 +1,33 @@
+name: Fix notification activation
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch notification permission flow
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('index.html')
+          s = p.read_text()
+          old = '''async function toggleNotifications(){if(localSettings.notifications){localSettings.notifications=false;localStorage.setItem('menuweekly_notifications','false');try{const s=await navigator.serviceWorker.ready,sub=await s.pushManager.getSubscription();if(sub)await fetch(NOTIFY_API,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint})});await s.pushManager.unsubscribe()}catch(e){}updateSwitches();return}try{if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window))throw new Error('unsupported');if(Notification.permission==='denied')throw new Error('permission-denied');const reg=await navigator.serviceWorker.register('./sw.js',{scope:'./'});await navigator.serviceWorker.ready;const permission=await Notification.requestPermission();if(permission!=='granted')throw new Error('permission');const keyResponse=await fetch(NOTIFY_API,{cache:'no-store'});if(!keyResponse.ok)throw new Error('key');const key=(await keyResponse.json()).publicKey;if(!key)throw new Error('key');const sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlBase64ToUint8Array(key)});const response=await fetch(NOTIFY_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(sub.toJSON())});if(!response.ok)throw new Error('save');localSettings.notifications=true;localStorage.setItem('menuweekly_notifications','true');updateSwitches()}catch(e){console.error('MenuWeekly notifications:',e);showStatus(e.message==='permission-denied'?'Notifiche bloccate nelle impostazioni del browser':'Impossibile abilitare le notifiche')}}'''
+          new = '''async function toggleNotifications(){if(localSettings.notifications){localSettings.notifications=false;localStorage.setItem('menuweekly_notifications','false');try{const s=await navigator.serviceWorker.ready,sub=await s.pushManager.getSubscription();if(sub)await fetch(NOTIFY_API,{method:'DELETE',headers:{'Content-Type':'application/json'},body:JSON.stringify({endpoint:sub.endpoint})});await s.pushManager.unsubscribe()}catch(e){}updateSwitches();return}try{if(!('serviceWorker'in navigator)||!('PushManager'in window)||!('Notification'in window))throw new Error('unsupported');if(Notification.permission==='denied')throw new Error('permission-denied');const permission=await Notification.requestPermission();if(permission!=='granted')throw new Error('permission');const reg=await navigator.serviceWorker.register('./sw.js',{scope:'./'});await navigator.serviceWorker.ready;const keyResponse=await fetch(NOTIFY_API,{cache:'no-store'});if(!keyResponse.ok)throw new Error('key');const key=(await keyResponse.json()).publicKey;if(!key)throw new Error('key');let sub=await reg.pushManager.getSubscription();if(!sub)sub=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:urlBase64ToUint8Array(key)});const response=await fetch(NOTIFY_API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(sub.toJSON())});if(!response.ok)throw new Error('save');localSettings.notifications=true;localStorage.setItem('menuweekly_notifications','true');updateSwitches()}catch(e){console.error('MenuWeekly notifications:',e);showStatus(e.message==='permission-denied'?'Notifiche bloccate nelle impostazioni del browser':'Impossibile abilitare le notifiche')}}'''
+          if old not in s:
+              raise SystemExit('Target notification function not found')
+          p.write_text(s.replace(old, new, 1))
+          PY
+      - name: Commit patch and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add index.html .github/workflows/fix-notification-activation.yml
+          git commit -m "Fix notification permission flow [skip ci]"
+          git push
