@@ -14,7 +14,7 @@ on:
   schedule:
     - cron: "45 7 * * *"
       timezone: "Europe/Rome"
-    - cron: "0 20 * * 0"
+    - cron: "0 21 * * 0"
       timezone: "Europe/Rome"
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
             echo "type=$MANUAL_TYPE" >> "$GITHUB_OUTPUT"
           elif [ "$EVENT_SCHEDULE" = "45 7 * * *" ]; then
             echo "type=freezer" >> "$GITHUB_OUTPUT"
-          elif [ "$EVENT_SCHEDULE" = "0 20 * * 0" ]; then
+          elif [ "$EVENT_SCHEDULE" = "0 21 * * 0" ]; then
             echo "type=weekly" >> "$GITHUB_OUTPUT"
           else
             echo "Unsupported schedule: $EVENT_SCHEDULE"
