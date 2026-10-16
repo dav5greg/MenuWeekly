@@ -15,13 +15,6 @@
       }
     },
     {
-      "endpoint": "https://fcm.googleapis.com/fcm/send/dExgx33Czd4:APA91bHCaKQmLbIEEQ39cF64W9aCDmte4IVkm8NBzS9RDaQpLqxcQyLhFoMQ-EJ-YkeG67XxZ-2lLzxXhGss9H0DwPZYFLi28oevQ9On7XU2Vu2UNq54vUzKC2ixndHWQE5I0we4MANX",
-      "keys": {
-        "p256dh": "BMJjAwMndKEPoFTdJJseT_yZsOwdMKDOpsUae0fSmzyOXq3nYveweZvVSRrTIVxIITrxs49R_Qq-beZ1RxnR2uQ",
-        "auth": "BlvF6CADiO4bRE4PAMoMDg"
-      }
-    },
-    {
       "endpoint": "https://fcm.googleapis.com/fcm/send/cZi9hblvqWA:APA91bH_YBmhVy43LPvwDxtPa9zTu48XSaVVKYJVHyoX5ZrwS1rvXKgONy6EEkcSWiR0YCjgxGf6kzQPkT2_-lhA8gc-MOfsSzaI6cuqy8z2PFwr4D0voVki4XddiFSzoIJNxglYWHYp",
       "keys": {
         "p256dh": "BJEfZnhorSUQyFF3hC2RKZra-WHexU4PjMa3beaSA_HLjelHuaV5tn3Uew_LNZQ5BZ7Q2OzVeSYek04BL9u2cyY",
