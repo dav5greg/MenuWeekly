@@ -1,10 +1,163 @@
 import webpush from "web-push";
-const REPOSITORY="dav5greg/MenuWeekly", BRANCH="main", MENU="data/menu.json", SUBS="data/subscriptions.json";
-const gh=()=>({"Accept":"application/vnd.github+json","Authorization":`Bearer ${process.env.GITHUB_TOKEN}`,"X-GitHub-Api-Version":"2022-11-28","User-Agent":"MenuWeekly-Cron"});
-async function read(path){const r=await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${path}?ref=${BRANCH}`,{headers:gh(),cache:"no-store"});if(!r.ok)throw new Error(`GitHub GET ${path} ${r.status}`);const j=await r.json();return JSON.parse(Buffer.from(j.content,"base64").toString("utf8"));}
-async function removeDead(store,dead){if(!dead.length)return;const r=await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${SUBS}?ref=${BRANCH}`,{headers:gh(),cache:"no-store"});const j=await r.json();const data={subscriptions:(store.subscriptions||[]).filter(s=>!dead.includes(s.endpoint))};await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${SUBS}`,{method:"PUT",headers:{...gh(),"Content-Type":"application/json"},body:JSON.stringify({message:"Remove expired notification subscriptions",content:Buffer.from(JSON.stringify(data,null,2)+"\n").toString("base64"),branch:BRANCH,sha:j.sha})});}
-function monday(d){const x=new Date(d);x.setHours(12,0,0,0);const n=x.getDay();x.setDate(x.getDate()-(n===0?6:n-1));return x;}
-function iso(d){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,"0")}-${String(d.getDate()).padStart(2,"0")}`;}
-function freezerPayload(menu){const days=["sunday","monday","tuesday","wednesday","thursday","friday","saturday"];const day=days[new Date().getDay()];const week=menu.weeks?.[iso(monday(new Date()))];const ids=[];for(const meal of ["lunch","dinner"]){const v=week?.[day]?.[meal];if(v?.type!=="dish")continue;const d=menu.dishes.find(x=>x.id===v.dishId);if(d?.needsFreezer&&!ids.includes(d.id))ids.push(d.id);}if(!ids.length)return null;const names=ids.map(id=>menu.dishes.find(d=>d.id===id)?.title).filter(Boolean);return {title:"MenuWeekly",body:`❄️ Ricorda di tirare fuori dal freezer ${names.length===1?names[0]:names.join(" e ")} per oggi.`};}
-function weeklyPayload(menu){const next=new Date();next.setDate(next.getDate()+1);const week=menu.weeks?.[iso(monday(next))];let n=0;for(const day of ["monday","tuesday","wednesday","thursday","friday"])if(week?.[day]?.dinner)n++;return {title:"MenuWeekly",body:n===5?"🍽️ Bravi bagigi! Avete configurato 5 cene su 5. 😄":n===0?"🍽️ La prossima settimana è ancora tutta da organizzare: 0 cene su 5.":`🍽️ Avete configurato ${n} cene su 5 per la prossima settimana.`};}
-export default async function handler(req,res){if(req.headers.authorization!==`Bearer ${process.env.CRON_SECRET}`)return res.status(401).send("Unauthorized");try{const type=req.query?.type||"";const menu=await read(MENU);const store=await read(SUBS);let payload=null;if(type==="freezer")payload=freezerPayload(menu);else if(type==="weekly")payload=weeklyPayload(menu);if(!payload)return res.status(200).json({sent:0,reason:"not_due"});webpush.setVapidDetails("mailto:menuweekly@users.noreply.github.com",process.env.VAPID_PUBLIC_KEY,process.env.VAPID_PRIVATE_KEY);const dead=[];let sent=0;await Promise.all((store.subscriptions||[]).map(async s=>{try{await webpush.sendNotification(s,JSON.stringify(payload));sent++;}catch(e){if(e.statusCode===404||e.statusCode===410)dead.push(s.endpoint);else console.error("Push failed",e.statusCode,e.message);}}));await removeDead(store,dead);return res.status(200).json({sent,removed:dead.length});}catch(e){console.error(e);return res.status(500).json({error:"CRON_NOTIFICATION_ERROR"});}}
+
+const REPOSITORY = "dav5greg/MenuWeekly";
+const BRANCH = "main";
+const MENU = "data/menu.json";
+const SUBS = "data/subscriptions.json";
+const ROME_TZ = "Europe/Rome";
+
+const gh = () => ({
+  "Accept": "application/vnd.github+json",
+  "Authorization": `Bearer ${process.env.GITHUB_TOKEN}`,
+  "X-GitHub-Api-Version": "2022-11-28",
+  "User-Agent": "MenuWeekly-Cron"
+});
+
+async function read(path) {
+  const r = await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${path}?ref=${BRANCH}`, {
+    headers: gh(),
+    cache: "no-store"
+  });
+  if (!r.ok) throw new Error(`GitHub GET ${path} ${r.status}`);
+  const j = await r.json();
+  return JSON.parse(Buffer.from(j.content, "base64").toString("utf8"));
+}
+
+async function removeDead(store, dead) {
+  if (!dead.length) return;
+  const r = await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${SUBS}?ref=${BRANCH}`, {
+    headers: gh(),
+    cache: "no-store"
+  });
+  if (!r.ok) throw new Error(`GitHub GET ${SUBS} ${r.status}`);
+  const j = await r.json();
+  const data = {
+    subscriptions: (store.subscriptions || []).filter(s => !dead.includes(s.endpoint))
+  };
+  const w = await fetch(`https://api.github.com/repos/${REPOSITORY}/contents/${SUBS}`, {
+    method: "PUT",
+    headers: { ...gh(), "Content-Type": "application/json" },
+    body: JSON.stringify({
+      message: "Remove expired notification subscriptions",
+      content: Buffer.from(JSON.stringify(data, null, 2) + "\n").toString("base64"),
+      branch: BRANCH,
+      sha: j.sha
+    })
+  });
+  if (!w.ok) throw new Error(`GitHub PUT ${SUBS} ${w.status}`);
+}
+
+function romeParts(date = new Date()) {
+  const parts = new Intl.DateTimeFormat("en-GB", {
+    timeZone: ROME_TZ,
+    weekday: "short",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+    hourCycle: "h23"
+  }).formatToParts(date);
+  return Object.fromEntries(parts.filter(p => p.type !== "literal").map(p => [p.type, p.value]));
+}
+
+function romeDate(date = new Date()) {
+  const p = romeParts(date);
+  return `${p.year}-${p.month}-${p.day}`;
+}
+
+function mondayFromYmd(ymd) {
+  const d = new Date(`${ymd}T12:00:00Z`);
+  const n = d.getUTCDay();
+  d.setUTCDate(d.getUTCDate() - (n === 0 ? 6 : n - 1));
+  return `${d.getUTCFullYear()}-${String(d.getUTCMonth() + 1).padStart(2, "0")}-${String(d.getUTCDate()).padStart(2, "0")}`;
+}
+
+function freezerPayload(menu) {
+  const today = romeDate();
+  const weekday = new Date(`${today}T12:00:00Z`).getUTCDay();
+  const days = ["sunday", "monday", "tuesday", "wednesday", "thursday", "friday", "saturday"];
+  const week = menu.weeks?.[mondayFromYmd(today)];
+  const ids = [];
+
+  for (const meal of ["lunch", "dinner"]) {
+    const v = week?.[days[weekday]]?.[meal];
+    if (v?.type !== "dish") continue;
+    const d = menu.dishes.find(x => x.id === v.dishId);
+    if (d?.needsFreezer && !ids.includes(d.id)) ids.push(d.id);
+  }
+
+  if (!ids.length) return null;
+
+  const names = ids.map(id => menu.dishes.find(d => d.id === id)?.title).filter(Boolean);
+  return {
+    title: "MenuWeekly",
+    body: `❄️ Ricorda di tirare fuori dal freezer ${names.length === 1 ? names[0] : names.join(" e ")} per oggi.`
+  };
+}
+
+function weeklyPayload(menu) {
+  const today = romeDate();
+  const next = new Date(`${today}T12:00:00Z`);
+  next.setUTCDate(next.getUTCDate() + 1);
+  const nextDate = `${next.getUTCFullYear()}-${String(next.getUTCMonth() + 1).padStart(2, "0")}-${String(next.getUTCDate()).padStart(2, "0")}`;
+  const week = menu.weeks?.[mondayFromYmd(nextDate)];
+  let n = 0;
+
+  for (const day of ["monday", "tuesday", "wednesday", "thursday", "friday"]) {
+    if (week?.[day]?.dinner) n++;
+  }
+
+  return {
+    title: "MenuWeekly",
+    body: n === 5
+      ? "🍽️ Bravi bagigi! Avete configurato 5 cene su 5. 😄"
+      : n === 0
+        ? "🍽️ La prossima settimana è ancora tutta da organizzare: 0 cene su 5."
+        : `🍽️ Avete configurato ${n} cene su 5 per la prossima settimana.`
+  };
+}
+
+export default async function handler(req, res) {
+  if (req.headers.authorization !== `Bearer ${process.env.CRON_SECRET}`) {
+    return res.status(401).send("Unauthorized");
+  }
+
+  try {
+    const type = req.query?.type || "";
+    const menu = await read(MENU);
+    const store = await read(SUBS);
+    let payload = null;
+
+    if (type === "freezer") payload = freezerPayload(menu);
+    else if (type === "weekly") payload = weeklyPayload(menu);
+    else return res.status(400).json({ error: "INVALID_NOTIFICATION_TYPE" });
+
+    if (!payload) return res.status(200).json({ sent: 0, reason: "nothing_to_send" });
+
+    webpush.setVapidDetails(
+      "mailto:menuweekly@users.noreply.github.com",
+      process.env.VAPID_PUBLIC_KEY,
+      process.env.VAPID_PRIVATE_KEY
+    );
+
+    const dead = [];
+    let sent = 0;
+
+    await Promise.all((store.subscriptions || []).map(async s => {
+      try {
+        await webpush.sendNotification(s, JSON.stringify(payload));
+        sent++;
+      } catch (e) {
+        if (e.statusCode === 404 || e.statusCode === 410) dead.push(s.endpoint);
+        else console.error("Push failed", e.statusCode, e.message);
+      }
+    }));
+
+    await removeDead(store, dead);
+    return res.status(200).json({ sent, removed: dead.length });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).json({ error: "CRON_NOTIFICATION_ERROR" });
+  }
+}
