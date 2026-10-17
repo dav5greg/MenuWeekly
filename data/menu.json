@@ -203,10 +203,7 @@
         }
       },
       "saturday": {
-        "lunch": {
-          "type": "dish",
-          "dishId": "ezt94fpv0q5mv3rpnwl"
-        },
+        "lunch": null,
         "dinner": null
       },
       "sunday": {
