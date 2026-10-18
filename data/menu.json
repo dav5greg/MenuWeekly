@@ -222,7 +222,10 @@
           "type": "free",
           "text": "Insalata e tonno"
         },
-        "dinner": null
+        "dinner": {
+          "type": "dish",
+          "dishId": "ezt94fpv0q5mv3rpnwl"
+        }
       },
       "tuesday": {
         "lunch": {
