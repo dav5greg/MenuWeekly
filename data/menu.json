@@ -213,7 +213,10 @@
     },
     "2026-10-19": {
       "monday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Insalata e tonno"
+        },
         "dinner": null
       },
       "tuesday": {
