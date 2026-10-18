@@ -239,7 +239,10 @@
           "type": "dish",
           "dishId": "4yuyjrwxhc8mv3rp6yw"
         },
-        "dinner": null
+        "dinner": {
+          "type": "dish",
+          "dishId": "2twnatbumkomux5pufa"
+        }
       },
       "thursday": {
         "lunch": {
