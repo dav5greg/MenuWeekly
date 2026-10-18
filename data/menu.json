@@ -241,7 +241,10 @@
         "dinner": null
       },
       "friday": {
-        "lunch": null,
+        "lunch": {
+          "type": "dish",
+          "dishId": "2twnatbumkomux5pufa"
+        },
         "dinner": {
           "type": "free",
           "text": "Cena da nonna Anna"
