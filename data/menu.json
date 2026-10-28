@@ -275,6 +275,39 @@
         "lunch": null,
         "dinner": null
       }
+    },
+    "2026-10-26": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": {
+          "type": "dish",
+          "dishId": "ezt94fpv0q5mv3rpnwl"
+        }
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
     }
   },
   "settings": {
