@@ -294,6 +294,39 @@
       },
       "thursday": {
         "lunch": null,
+        "dinner": {
+          "type": "dish",
+          "dishId": "cpqbcnxbr0qmux5p5bo"
+        }
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
+    },
+    "2026-11-02": {
+      "monday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
         "dinner": null
       },
       "friday": {
