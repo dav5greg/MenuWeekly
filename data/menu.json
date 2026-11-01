@@ -328,7 +328,10 @@
           "type": "dish",
           "dishId": "bkv75wdtt2cmv3rpc77"
         },
-        "dinner": null
+        "dinner": {
+          "type": "free",
+          "text": "Frittata o uova sode"
+        }
       },
       "wednesday": {
         "lunch": {
