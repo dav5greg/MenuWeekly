@@ -354,7 +354,10 @@
         }
       },
       "friday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Verdura o zuppa o tonno"
+        },
         "dinner": null
       },
       "saturday": {
