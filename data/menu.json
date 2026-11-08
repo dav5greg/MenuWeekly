@@ -391,7 +391,10 @@
     },
     "2026-11-09": {
       "monday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Verdura pappa pronta"
+        },
         "dinner": null
       },
       "tuesday": {
