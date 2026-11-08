@@ -391,10 +391,7 @@
     },
     "2026-11-09": {
       "monday": {
-        "lunch": {
-          "type": "dish",
-          "dishId": "iwllt0rzbdfmv3rp32l"
-        },
+        "lunch": null,
         "dinner": null
       },
       "tuesday": {
