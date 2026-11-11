@@ -422,10 +422,7 @@
       },
       "thursday": {
         "lunch": null,
-        "dinner": {
-          "type": "free",
-          "text": "Uova e verdura"
-        }
+        "dinner": null
       },
       "friday": {
         "lunch": {
