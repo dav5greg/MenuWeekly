@@ -448,7 +448,10 @@
     },
     "2026-11-16": {
       "monday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Verdura"
+        },
         "dinner": null
       },
       "tuesday": {
