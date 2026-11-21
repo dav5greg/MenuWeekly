@@ -505,6 +505,39 @@
         "lunch": null,
         "dinner": null
       }
+    },
+    "2026-11-23": {
+      "monday": {
+        "lunch": null,
+        "dinner": {
+          "type": "dish",
+          "dishId": "3jd5qh3hscwmux5qevm"
+        }
+      },
+      "tuesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "wednesday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "thursday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "friday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "saturday": {
+        "lunch": null,
+        "dinner": null
+      },
+      "sunday": {
+        "lunch": null,
+        "dinner": null
+      }
     }
   },
   "settings": {
