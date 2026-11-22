@@ -538,7 +538,10 @@
         }
       },
       "thursday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Zuppa"
+        },
         "dinner": {
           "type": "dish",
           "dishId": "cpqbcnxbr0qmux5p5bo"
