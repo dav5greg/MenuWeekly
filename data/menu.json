@@ -525,7 +525,10 @@
         }
       },
       "wednesday": {
-        "lunch": null,
+        "lunch": {
+          "type": "free",
+          "text": "Zuppa di fagioli"
+        },
         "dinner": {
           "type": "dish",
           "dishId": "3jd5qh3hscwmux5qevm"
